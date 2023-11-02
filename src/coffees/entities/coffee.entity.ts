@@ -18,7 +18,9 @@ export class Coffee {
 
   @JoinTable()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  @ManyToMany((type) => Flavor, (flavor) => flavor.coffees)
+  @ManyToMany((type) => Flavor, (flavor) => flavor.coffees, {
+    cascade: true,
+  })
   // @Column('json', { nullable: true }) //falvors is array and empty flavor is allowed
-  flavors: string[];
+  flavors: Flavor[];
 }
