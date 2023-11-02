@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -23,10 +25,10 @@ export class CoffeesController {
   //     return `This action return all coffees.Limit: ${limit}, offset: ${offset}`;
   //   }
   @Get()
-  findAll() {
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
     //@Res() response
     // response.status(200).send('This action return all coffees');
-    return this.coffeeService.findAll();
+    return this.coffeeService.findAll(paginationQuery);
     return `This action return all coffees.`;
   }
 

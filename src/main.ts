@@ -9,6 +9,9 @@ async function bootstrap() {
       whitelist: true, //filter out unwanted key values
       forbidNonWhitelisted: true, //send error if  unwanted key values
       transform: true, //tranform body into instance of DTO
+      transformOptions: {
+        enableImplicitConversion: true, //no longer have to specify types with type decorator
+      },
     }),
   );
   await app.listen(3000);
