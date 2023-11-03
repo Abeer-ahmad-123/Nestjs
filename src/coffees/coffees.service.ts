@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Coffee } from './entities/coffee.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
@@ -10,7 +10,7 @@ import { Event } from 'src/events/entities/event.entity/event.entity';
 import { COFFEE_BRANDS } from './coggees-contants';
 
 //empty is singleton which will intantiate once
-@Injectable({ scope: Scope.REQUEST }) // { scope: Scope.TRANSIENT } scope transient: each consumer recieve a dedicated instance of provider | request scope privde new dedicated instace of provider for each incoming request, instace automatically garbage collected after request has completed processing
+@Injectable() // { scope: Scope.TRANSIENT } scope transient: each consumer recieve a dedicated instance of provider | request scope privde new dedicated instace of provider for each incoming request, instace automatically garbage collected after request has completed processing
 export class CoffeesService {
   constructor(
     @InjectRepository(Coffee)

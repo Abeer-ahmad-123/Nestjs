@@ -5,11 +5,11 @@ import { DataSource } from 'typeorm';
 
 export default new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5433,
-  username: 'postgres',
-  password: '1234',
-  database: 'postgres',
+  host: process.env.DATABASE_HOST,
+  port: +process.env.DATABASE_PORT,
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
   entities: [Coffee, Flavor],
   migrations: [CoffeeRefactor1698929757728],
 });
