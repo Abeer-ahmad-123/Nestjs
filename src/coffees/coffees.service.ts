@@ -7,8 +7,8 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
 import { Flavor } from './entities/flavor.entity/flavor.entity';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 import { Event } from 'src/events/entities/event.entity/event.entity';
-import { COFFEE_BRANDS } from './coggees-contants';
-import { ConfigService } from '@nestjs/config';
+import { ConfigType } from '@nestjs/config';
+import coffeesConfig from './config/coffees.config';
 
 //empty is singleton which will intantiate once
 @Injectable() // { scope: Scope.TRANSIENT } scope transient: each consumer recieve a dedicated instance of provider | request scope privde new dedicated instace of provider for each incoming request, instace automatically garbage collected after request has completed processing
@@ -20,12 +20,18 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
     private readonly dataSource: DataSource,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Inject(COFFEE_BRANDS) coffeeBrands: string[],
-    private readonly configService: ConfigService,
+    //   @Inject(COFFEE_BRANDS) coffeeBrands: string[],
+    //   private readonly configService: ConfigService,
+    // ) {
+    //   const coffeesConfig = this.configService.get('coffees.foo'); //path of host property
+    //   console.log('coffeesConfig', coffeesConfig);
+    //   console.log('CoffeesService Instantiated');
+    // } // this approach dont have type safety and make testing more difficult as we need to mock method the get method, hard code environment values and return diifferent valyes based on different keys
+
+    @Inject(coffeesConfig.KEY) //injecting entire namespace configuration
+    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>, //ConfigType infers the return type of function
   ) {
-    const databseHost = this.configService.get('database.host'); //path of host property
-    console.log('Datbase', databseHost);
-    console.log('CoffeesService Instantiated');
+    console.log(coffeesConfiguration);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
