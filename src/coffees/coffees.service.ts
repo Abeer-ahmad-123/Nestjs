@@ -23,7 +23,7 @@ export class CoffeesService {
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
     private readonly configService: ConfigService,
   ) {
-    const databseHost = this.configService.get<string>('DATABASE_HOST');
+    const databseHost = this.configService.get('database.host'); //path of host property
     console.log('Datbase', databseHost);
     console.log('CoffeesService Instantiated');
   }
