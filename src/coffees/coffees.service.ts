@@ -9,7 +9,8 @@ import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/paginati
 import { Event } from 'src/events/entities/event.entity/event.entity';
 import { COFFEE_BRANDS } from './coggees-contants';
 
-@Injectable()
+//empty is singleton which will intantiate once
+@Injectable() // { scope: Scope.TRANSIENT } scope transient: each consumer recieve a dedicated instance of provider | request scope privde new dedicated instace of provider for each incoming request, instace automatically garbage collected after request has completed processing
 export class CoffeesService {
   constructor(
     @InjectRepository(Coffee)
@@ -17,9 +18,10 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly dataSource: DataSource,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
-    console.log('coffee', coffeeBrands);
+    console.log('coffees instantiated');
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
