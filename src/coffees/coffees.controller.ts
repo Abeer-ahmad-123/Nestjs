@@ -13,6 +13,7 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 // @UsePipes(ValidationPipe) //controller type
 // can apply instace of new class here but it will increase memory usage because nest can easily reuse instaces of same class here we are creating evertime when we will use the word new
@@ -31,6 +32,7 @@ export class CoffeesController {
   //   }
 
   // @UsePipes(ValidationPipe) // method type
+  @Public()
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     //@Res() response
