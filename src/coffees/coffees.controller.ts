@@ -7,12 +7,15 @@ import {
   Patch,
   Post,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto/update-coffee.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto/pagination-query.dto';
 
+// @UsePipes(ValidationPipe) //controller type
+// can apply instace of new class here but it will increase memory usage because nest can easily reuse instaces of same class here we are creating evertime when we will use the word new
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeeService: CoffeesService) {
@@ -26,6 +29,8 @@ export class CoffeesController {
 
   //     return `This action return all coffees.Limit: ${limit}, offset: ${offset}`;
   //   }
+
+  // @UsePipes(ValidationPipe) // method type
   @Get()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     //@Res() response
@@ -52,8 +57,12 @@ export class CoffeesController {
     return createCoffeeDto;
   }
 
+  //can use params scope validation pipe like this
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+  update(
+    @Param('id') id: string,
+    @Body(ValidationPipe) updateCoffeeDto: UpdateCoffeeDto,
+  ) {
     return this.coffeeService.update(id, updateCoffeeDto);
     return `This action updates #${id} coffee`;
   }

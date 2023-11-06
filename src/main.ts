@@ -6,6 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
+      //can not inject any dependencies here as we are setting in up outside of context of nextjs module
       whitelist: true, //filter out unwanted key values
       forbidNonWhitelisted: true, //send error if  unwanted key values
       transform: true, //tranform body into instance of DTO
